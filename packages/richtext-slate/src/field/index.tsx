@@ -48,7 +48,8 @@ export const RichTextField: React.FC<SlateFieldProps> = (props) => {
 
   if (!hasLoadedPlugins) {
     return (
-      <React.Fragment>
+      <div>
+        <ShimmerEffect height="24px" width="180px" style={{ marginBottom: '8px' }} /> {/* Loading message */}
         {Array.isArray(features.plugins) &&
           features.plugins.map((Plugin, i) => {
             return (
@@ -62,7 +63,14 @@ export const RichTextField: React.FC<SlateFieldProps> = (props) => {
   }
 
   return (
-    <Suspense fallback={<ShimmerEffect height="35vh" />}>
+    <Suspense 
+      fallback={
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <ShimmerEffect height="40px" /> {/* Toolbar */}
+          <ShimmerEffect height="30vh" /> {/* Content area */}
+        </div>
+      }
+    >
       <RichTextEditor
         {...props}
         elements={features.elements}
